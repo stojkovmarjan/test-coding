@@ -1,0 +1,16 @@
+<table>
+  <tr *ngFor="let album of albums">
+    <td>
+      <img src="{{album.thumbnailUrl}}" >
+    </td>
+    <td>
+      {{album.id}}
+    </td>
+    <td>
+      {{album.title}}
+    </td>
+    <td>
+      <button (click)="details(album)">Open</button>
+    </td>
+  </tr>
+</table>

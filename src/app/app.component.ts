@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Album } from './_models/album';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,16 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'test-coding';
+  selectedAlbum?: Album;
+
+
+  albumSlected($event: Album){
+    this.selectedAlbum = $event;
+    
+  }
+
+  closeDetails(){
+    this.selectedAlbum = undefined;
+  }
+
 }
