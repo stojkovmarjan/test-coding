@@ -1,4 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { Album } from '../_models/album';
 import { AlbumsService } from '../_services/albums.service';
 
@@ -10,6 +11,7 @@ import { AlbumsService } from '../_services/albums.service';
 export class ViewMasterComponent implements OnInit {
 
   albums?: Album[];
+  albumsSubscription?: Subscription;
 
   @Output()
    albumSelected: EventEmitter<Album> = new EventEmitter<Album>();
@@ -17,7 +19,7 @@ export class ViewMasterComponent implements OnInit {
   constructor(private albumsService: AlbumsService) { }
 
   ngOnInit(): void {
-    this.albumsService.getAlbums().subscribe(
+    this.albumsSubscription = this.albumsService.getAlbums().subscribe(
       response => {
         this.albums = response.slice(0,10);
         console.log(this.albums);
@@ -28,6 +30,10 @@ export class ViewMasterComponent implements OnInit {
   details(album: Album){
     //console.log(album);
     this.albumSelected.emit(album);
+  }
+
+  ngOnDestroy(): void {
+    this.albumsSubscription?.unsubscribe();
   }
 
 }
